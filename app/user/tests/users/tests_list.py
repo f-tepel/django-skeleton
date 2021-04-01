@@ -23,7 +23,6 @@ class UserTestCase(TestCase):
     self.client.login(username=self.db.CUSTOMER_EMAIL, password=self.db.PASSWORD)
     res = self.client.get(self.ROUTE)
     self.assertEquals(res.status_code, 403)
-    self.assertEquals(1, 0)
 
   def test_get_all_as_staff(self):
     self.client.login(username=self.db.STAFF_EMAIL, password=self.db.PASSWORD)
