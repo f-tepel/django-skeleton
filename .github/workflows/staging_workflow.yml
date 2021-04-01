@@ -5,18 +5,30 @@ on:
       - master
 
 jobs:
+  test:
+    name: Execute tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Build docker images
+        run: docker-compose build
+      - name: Start docker-compose
+        run: docker-compose up -d
+      - name: Run tests
+        run: docker-compose exec -T web coverage run --source='.' manage.py test --pattern="tests_*.py"
+      - name: Generate coverage report
+        run: |
+          coverage json
+          COV=$(cat coverage.json)
+          PCT="$(echo "$COV" | python -c "import sys, json; print(json.load(sys.stdin)['totals']['percent_covered'])")"
+          echo "$PCT" | python -c "import sys; import json; print('Test coverage is fine') if json.load(sys.stdin) > 90 else sys.exit(1)"
+          coverage report
+
   deploy:
     name: deploy to vps
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    - name: Build docker images
-      run: docker-compose build
-    - name: Start docker-compose
-      run: docker-compose up -d
-    - name: Run tests
-      run: docker-compose exec -T web python manage.py test --pattern="tests_*.py"
     - name: Deploy to api staging
       uses: appleboy/ssh-action@master
       with:
