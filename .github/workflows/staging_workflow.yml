@@ -2,13 +2,21 @@ name: CI
 on:
   push:
     branches:
-      - staging
+      - master
 
 jobs:
   deploy:
     name: deploy to vps
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Build docker images
+      run: docker-compose build
+    - name: Start docker-compose
+      run: docker-compose up -d
+    - name: Run tests
+      run: docker-compose exec -T web python manage.py test --pattern="tests_*.py"
     - name: Deploy to api staging
       uses: appleboy/ssh-action@master
       with:
