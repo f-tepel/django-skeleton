@@ -1,0 +1,25 @@
+name: CI
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  deploy:
+    name: deploy to vps
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to api staging
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.STAGING_HOST }}
+        username: ${{ secrets.STAGING_USER }}
+        key: ${{ secrets.KEY }}
+        port: 22
+        script: |
+          cd ~/vet-portal-api
+          git pull
+          docker-compose -f docker-compose.prod.yaml build
+          docker-compose -f docker-compose.prod.yaml up -d
+          docker-compose -f docker-compose.prod.yaml exec -T web python manage.py collectstatic --noinput
+          docker-compose -f docker-compose.prod.yaml exec -T web python manage.py migrate
