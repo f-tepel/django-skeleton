@@ -19,11 +19,12 @@ jobs:
         run: docker-compose exec -T web coverage run --source='.' manage.py test --pattern="tests_*.py"
       - name: Generate coverage report
         run: |
-          docker-compose exec -T web coverage json
-          docker-compose exec -T web COV=$(cat coverage.json)
-          docker-compose exec -T web PCT="$(echo "$COV" | python -c "import sys, json; print(json.load(sys.stdin)['totals']['percent_covered'])")"
-          docker-compose exec -T web echo "$PCT" | python -c "import sys; import json; print('Test coverage is fine') if json.load(sys.stdin) > 99 else sys.exit(1)"
-          docker-compose exec -T web coverage report
+          docker-compose exec web sh
+          coverage json
+          COV=$(cat coverage.json)
+          PCT="$(echo "$COV" | python -c "import sys, json; print(json.load(sys.stdin)['totals']['percent_covered'])")"
+          echo "$PCT" | python -c "import sys; import json; print('Test coverage is fine') if json.load(sys.stdin) > 99 else sys.exit(1)"
+          coverage report
 
   deploy:
     needs: test
