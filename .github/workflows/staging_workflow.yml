@@ -18,7 +18,7 @@ jobs:
       - name: Run tests
         run: docker-compose exec -T web coverage run --source='.' manage.py test --pattern="tests_*.py"
       - name: Generate coverage report
-        run: docker-compose exec web sh ./test.sh
+        run: docker-compose exec -T web sh ./test.sh
 
   deploy:
     needs: test
