@@ -1,3 +1,4 @@
+set -eu
 chmod +x coverage.json
 coverage json
 COV=$(cat coverage.json)
