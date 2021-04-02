@@ -1,10 +1,9 @@
 import json
 
+import test.test_utils as utils
 from django.test import TestCase
 from rest_framework.test import APIClient
-
 from test.fixture import DBInitializer
-import test.test_utils as utils
 
 
 class ChangeEmailTestCase(TestCase):
@@ -23,10 +22,10 @@ class ChangeEmailTestCase(TestCase):
     res = self.client.put(self.ROUTE, data={
       'email': self.NEW_EMAIL
     }, content_type='application/json')
-    
+
     self.assertEqual(res.status_code, 204)
 
-    res = self.client.get(f'/api/customers/{self.db.customer_user.id}')
+    res = self.client.get(f'/api/users/{self.db.customer_user.id}')
     utils.get_detail_check(self, res)
     body = json.loads(res.content)
     self.assertEqual(body['data']['email'], self.NEW_EMAIL)
@@ -64,8 +63,7 @@ class ChangeEmailTestCase(TestCase):
     utils.unauthorized_check(self, res)
 
     self.client.login(username=self.db.CUSTOMER_EMAIL, password=self.db.PASSWORD)
-    res = self.client.get(f'/api/customers/{self.db.customer_user.id}')
+    res = self.client.get(f'/api/users/{self.db.customer_user.id}')
     utils.get_detail_check(self, res)
     body = json.loads(res.content)
     self.assertEqual(body['data']['email'], self.db.CUSTOMER_EMAIL)
-

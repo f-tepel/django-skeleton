@@ -19,7 +19,7 @@ services:
     environment:
       - POSTGRES_USER=api
       - POSTGRES_PASSWORD=api_pwd
-      - POSTGRES_DB=ebrainapi
+      - POSTGRES_DB=api
 
 volumes:
   pg_data:

@@ -1,7 +1,7 @@
 import json
 
-from django.test import TestCase
 from django.http import HttpResponse
+from django.test import TestCase
 
 
 def get_detail_check(instance: TestCase, res: HttpResponse):
@@ -27,9 +27,9 @@ def import_format_check(instance: TestCase, res: HttpResponse):
 
   format_success_response_check(instance, res)
   data = body.get('data')
-  instance.assertIsInstance(data.get('created'),  int)
-  instance.assertIsInstance(data.get('updated'),  int)
-  instance.assertIsInstance(data.get('errors'),  list)
+  instance.assertIsInstance(data.get('created'), int)
+  instance.assertIsInstance(data.get('updated'), int)
+  instance.assertIsInstance(data.get('errors'), list)
 
 
 def created_check(instance: TestCase, res: HttpResponse):
@@ -90,7 +90,3 @@ def compare_list_length(instance: TestCase, res: HttpResponse, expected_length: 
   data = body.get('data')
 
   instance.assertEqual(data.get('count'), expected_length)
-
-
-
-

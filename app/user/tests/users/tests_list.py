@@ -1,11 +1,7 @@
+import test.test_utils as utils
 from django.test import TestCase
 from rest_framework.test import APIClient
-
-import test.test_utils as utils
 from test.fixture import DBInitializer
-
-import json
-from loguru import logger
 
 
 class UserTestCase(TestCase):
@@ -33,20 +29,6 @@ class UserTestCase(TestCase):
     self.client.login(username=self.db.BUSINESS_EMAIL, password=self.db.PASSWORD)
     res = self.client.get(self.ROUTE)
     utils.get_detail_check(self, res)
-
-  # Test only users from own company get returned
-  def test_get_only_company_users_as_staff(self):
-    self.client.login(username=self.db.STAFF_EMAIL, password=self.db.PASSWORD)
-    res = self.client.get(self.ROUTE)
-
-    utils.compare_list_length(self, res, 2)
-
-  # Test only users from own company get returned
-  def test_get_only_company_users_as_business(self):
-    self.client.login(username=self.db.BUSINESS_EMAIL, password=self.db.PASSWORD)
-    res = self.client.get(self.ROUTE)
-
-    utils.compare_list_length(self, res, 2)
 
   def test_add_user_as_customer(self):
     self.client.login(username=self.db.CUSTOMER_EMAIL, password=self.db.PASSWORD)

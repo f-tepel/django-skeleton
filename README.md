@@ -1,28 +1,24 @@
-# vet-portal-api
+# django-docker-compose-skeleton
 
-This repository serves as the api of the vet-portal-platform
+This repository serves as a django project skeleton. It includes
 
+- An /auth endpoint to login, register and authenticate users
+- An /users endpoint to create, update, retrieve and delete users. Also email and password can be changed.
+- It uses three groups: customer, staff and business owner
+- It is documented at /api with a OpenAPI schema
 
-## API documentation
+## TODO
+- Add register email verification
+- Add change email verification
+- Add GraphQL
 
-The API endpoint and its documentation can be found [here](http://www.staging.services.ebrain-solutions.de/api/) 
-as a yaml specification.
-
-Use the /api/users/login route in to authenticate. Authentication can be also be done in the browser [here](http://www.staging.services.ebrain-solutions.de/api/users/login/)
-
-Now one can see all available routes and their parameters on the API overview screen "/api".
-
-
-## Installtion
+## Installation
 
 First install the dependencies to get started:
 
 - Docker
 - Python
-- An editor like VS Code
-
-Add your ssh key to your github account. This is described [here](https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account).
-
+- An editor like PyCharm
 
 Clone the repository to your device & cd into it
 

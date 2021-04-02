@@ -1,10 +1,7 @@
-import json
-
+import test.test_utils as utils
 from django.test import TestCase
 from rest_framework.test import APIClient
-
 from test.fixture import DBInitializer
-import test.test_utils as utils
 
 
 class ChangePasswordTestCase(TestCase):
@@ -28,7 +25,7 @@ class ChangePasswordTestCase(TestCase):
     self.assertEqual(res.status_code, 204)
 
     self.client.login(username=self.db.CUSTOMER_EMAIL, password=self.NEW_PASSWORD)
-    res = self.client.get('/api/users/auth')
+    res = self.client.get('/api/auth/')
     utils.get_detail_check(self, res)
 
   def test_old_password_does_not_work(self):
@@ -41,7 +38,7 @@ class ChangePasswordTestCase(TestCase):
 
     self.client.logout()
     self.client.login(username=self.db.CUSTOMER_EMAIL, password=self.db.PASSWORD)
-    res = self.client.get('/api/users/auth')
+    res = self.client.get('/api/auth/')
     utils.unauthorized_check(self, res)
 
   def test_change_password_unauthenticated(self):
@@ -54,17 +51,10 @@ class ChangePasswordTestCase(TestCase):
 
     # Check that new password does not work
     self.client.login(username=self.db.CUSTOMER_EMAIL, password=self.NEW_PASSWORD)
-    res = self.client.get('/api/users/auth')
+    res = self.client.get('/api/auth/')
     utils.unauthorized_check(self, res)
 
     # Check if password remained the same
     self.client.login(username=self.db.CUSTOMER_EMAIL, password=self.db.PASSWORD)
-    res = self.client.get('/api/users/auth')
+    res = self.client.get('/api/auth/')
     utils.format_success_response_check(self, res)
-
-
-
-
-
-
-

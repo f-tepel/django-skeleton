@@ -1,11 +1,9 @@
-from rest_framework.pagination import LimitOffsetPagination
-
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import mixins
 from rest_framework import generics
+from rest_framework import mixins
+from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.permissions import IsAuthenticated
 
 from api.permissions import DjangoModelPermissionsWithRead
-from api.permissions import Group
 from api.response import transform_drf_response
 from user.models import User
 from user.serializers import UserListSerializer
@@ -16,14 +14,14 @@ class UserList(generics.GenericAPIView,
                mixins.CreateModelMixin,
                LimitOffsetPagination):
   """
-  Get all users that belong to a company or add a new user.
+  Get all users or add a new user.
   """
   queryset = User.objects.all()
   serializer_class = UserListSerializer
   permission_classes = [IsAuthenticated, DjangoModelPermissionsWithRead]
 
   def get_queryset(self, *args, **kwargs):
-    return User.objects.filter(company=self.request.user.company).filter(groups__name__in=[Group.BUSINESS, Group.STAFF])
+    return User.objects.all()
 
   def get(self, request, *args, **kwargs):
     return transform_drf_response(self.list(request, *args, **kwargs))

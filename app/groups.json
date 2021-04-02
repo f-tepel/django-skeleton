@@ -1,1 +1,0 @@
-[{"model": "auth.group", "pk": 1, "fields": {"name": "customer", "permissions": []}}, {"model": "auth.group", "pk": 2, "fields": {"name": "business_owner", "permissions": []}}, {"model": "auth.group", "pk": 3, "fields": {"name": "staff", "permissions": []}}, {"model": "auth.group", "pk": 4, "fields": {"name": "admin", "permissions": []}}]
