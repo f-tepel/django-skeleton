@@ -1,3 +1,6 @@
-python manage.py test user/tests
-python manage.py test company/tests
-python manage.py test patient/tests
+chmod +x coverage.json
+coverage json
+COV=$(cat coverage.json)
+PCT="$(echo "$COV" | python -c "import sys, json; print(json.load(sys.stdin)['totals']['percent_covered'])")"
+echo "$PCT" | python -c "import sys; import json; print('Test coverage is fine') if json.load(sys.stdin) > 99 else sys.exit(1)"
+coverage report
