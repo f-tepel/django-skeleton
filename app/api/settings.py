@@ -3,6 +3,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+print('base dir')
+print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -31,6 +33,7 @@ INSTALLED_APPS = [
   'rest_framework',
   'user',
   'authentication',
+  'django_email_verification'
 ]
 
 MIDDLEWARE = [
@@ -70,14 +73,12 @@ if DEBUG == 1:
   ]
 
 AUTH_USER_MODEL = 'user.User'
-LOGIN_REDIRECT_URL = '/dashboard'
-
 ROOT_URLCONF = 'api.urls'
 
 TEMPLATES = [
   {
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    'DIRS': [],
+    'DIRS': [BASE_DIR / 'api' / 'templates'],
     'APP_DIRS': True,
     'OPTIONS': {
       'context_processors': [
@@ -141,3 +142,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATIC_URL = '/api/staticfiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+# Email Verification
+def verified_callback(user):
+    user.is_active = True
+
+
+EMAIL_VERIFIED_CALLBACK = verified_callback
+EMAIL_FROM_ADDRESS = 'noreply@test.com'
+EMAIL_MAIL_SUBJECT = 'Confirm your email'
+EMAIL_MAIL_HTML = 'mail_body.html'
+EMAIL_MAIL_PLAIN = 'mail_body.txt'
+EMAIL_TOKEN_LIFE = 60 * 60
+EMAIL_PAGE_TEMPLATE = 'confirm_template.html'
+EMAIL_PAGE_DOMAIN = 'localhost:8000'
+
+# For Django Email Backend
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True

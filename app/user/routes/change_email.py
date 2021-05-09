@@ -16,6 +16,7 @@ class UpdateEmail(APIView):
     return self.request.user
 
   def put(self, request, *args, **kwargs):
+    # TODO verify email here
     self.object = self.get_object()
     serializer = ChangeEmailSerializer(data=request.data)
 

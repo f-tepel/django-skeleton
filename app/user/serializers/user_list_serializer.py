@@ -10,6 +10,7 @@ class UserListSerializer(serializers.HyperlinkedModelSerializer):
     read_only_fields = ['id', 'email']
 
   def create(self, validated_data):
+    # TODO verify email here
     user = User.objects.create(**validated_data)
     password = User.objects.make_random_password()
     user.set_password(password)
