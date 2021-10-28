@@ -1,14 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.schemas import get_schema_view
+from django.views.decorators.csrf import csrf_exempt
+from graphene_django.views import GraphQLView
 
 urlpatterns = [
-  path('api/', get_schema_view(
-    title="My project API",
-    description="API to for your super project.",
-    version="0.1.0"
-  ), name='openapi-schema'),
   path('api/admin/', admin.site.urls),
   path('api/users/', include('user.urls')),
-  path('api/auth/', include('authentication.urls')),
+  path('api/graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
 ]

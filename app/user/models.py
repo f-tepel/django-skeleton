@@ -8,7 +8,12 @@ from loguru import logger
 
 from .exceptions import NoSupportedGroup
 from .manager import UserManager
-from .routes.path import UserType
+
+
+class UserType:
+  CUSTOMER: str = 'customer'
+  BUSINESS: str = 'business'
+  IMPORT: str = 'import'
 
 
 class User(AbstractUser):

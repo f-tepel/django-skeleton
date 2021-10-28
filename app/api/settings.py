@@ -3,8 +3,6 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-print('base dir')
-print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -30,10 +28,10 @@ INSTALLED_APPS = [
   'django.contrib.sessions',
   'django.contrib.messages',
   'django.contrib.staticfiles',
-  'rest_framework',
   'user',
-  'authentication',
-  'django_email_verification'
+  'graphene_django',
+  'graphql_auth',
+  'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -55,22 +53,39 @@ REST_FRAMEWORK = {
   ]
 }
 
+AUTHENTICATION_BACKENDS = [
+  'graphql_jwt.backends.JSONWebTokenBackend',
+  'django.contrib.auth.backends.ModelBackend',
+  'graphql_auth.backends.GraphQLAuthBackend'
+]
+
+GRAPHQL_JWT = {
+    'JWT_VERIFY_EXPIRATION': True,
+}
+
+GRAPHENE = {
+    'SCHEMA': 'api.schema.schema',
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
+}
+
 if DEBUG == 1:
   ALLOWED_HOSTS += ['*', 'localhost', '127.0.0.1']
-  MIDDLEWARE.append('corsheaders.middleware.CorsMiddleware')
-  INSTALLED_APPS.append('corsheaders')
-
-  CORS_ORIGIN_ALLOW_ALL = True
-  CORS_ALLOW_CREDENTIALS = True
-  CORS_ALLOW_HEADERS = ['Location', 'Set-Cookie', 'X-CSRFToken', 'x-csrftoken', 'content-type']
-  CORS_ALLOW_METHODS = [
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
-  ]
+  # MIDDLEWARE.append('corsheaders.middleware.CorsMiddleware')
+  # INSTALLED_APPS.append('corsheaders')
+  #
+  # CORS_ORIGIN_ALLOW_ALL = True
+  # CORS_ALLOW_CREDENTIALS = True
+  # CORS_ALLOW_HEADERS = ['Location', 'Set-Cookie', 'X-CSRFToken', 'x-csrftoken', 'content-type']
+  # CORS_ALLOW_METHODS = [
+  #   'DELETE',
+  #   'GET',
+  #   'OPTIONS',
+  #   'PATCH',
+  #   'POST',
+  #   'PUT',
+  # ]
 
 AUTH_USER_MODEL = 'user.User'
 ROOT_URLCONF = 'api.urls'

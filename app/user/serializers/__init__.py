@@ -1,4 +1,0 @@
-from .change_email_serializer import ChangeEmailSerializer
-from .change_password_serializer import ChangePasswordSerializer
-from .user_detail_serializer import UserDetailSerializer
-from .user_list_serializer import UserListSerializer
