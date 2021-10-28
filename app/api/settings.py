@@ -31,7 +31,8 @@ INSTALLED_APPS = [
   'user',
   'graphene_django',
   'graphql_auth',
-  'django_filters'
+  'django_filters',
+  'graphql_jwt.refresh_token.apps.RefreshTokenConfig'
 ]
 
 MIDDLEWARE = [
@@ -44,15 +45,6 @@ MIDDLEWARE = [
   'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-REST_FRAMEWORK = {
-  'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-  'PAGE_SIZE': 10,
-  'EXCEPTION_HANDLER': 'api.exceptions.custom_exception_handler',
-  'DEFAULT_PERMISSION_CLASSES': [
-    'rest_framework.permissions.DjangoModelPermissions'
-  ]
-}
-
 AUTHENTICATION_BACKENDS = [
   'graphql_jwt.backends.JSONWebTokenBackend',
   'django.contrib.auth.backends.ModelBackend',
@@ -60,7 +52,24 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 GRAPHQL_JWT = {
-    'JWT_VERIFY_EXPIRATION': True,
+  'JWT_VERIFY_EXPIRATION': True,
+  'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
+  'JWT_ALLOW_ANY_CLASSES': [
+    'graphql_auth.mutations.Register',
+    'graphql_auth.mutations.VerifyAccount',
+    'graphql_auth.mutations.ResendActivationEmail',
+    'graphql_auth.mutations.SendPasswordResetEmail',
+    'graphql_auth.mutations.PasswordReset',
+    'graphql_auth.mutations.ObtainJSONWebToken',
+    'graphql_auth.mutations.VerifyToken',
+    'graphql_auth.mutations.RefreshToken',
+    'graphql_auth.mutations.RevokeToken',
+  ],
+}
+
+GRAPHQL_AUTH = {
+    'LOGIN_ALLOWED_FIELDS': ['email'],
+    'REGISTER_MUTATION_FIELDS': ['email'],
 }
 
 GRAPHENE = {
