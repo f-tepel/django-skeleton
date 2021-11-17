@@ -1,0 +1,13 @@
+Hallo {{ first_name }}!
+
+Sie erhalten diese E-Mail, weil Sie Ihre E-Mail ändern möchten. Falls Sie keine Änderung angefragt haben,
+können Sie diese E-Mail ignorieren.
+
+Bitte klicken sie auf diesen Link, um Ihre neue E-Mail Adresse zu bestätigen:
+
+{{ change_email_url }}
+
+
+Beste Grüße,
+<br><br>
+Ihr eBrain Support Team

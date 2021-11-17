@@ -70,6 +70,10 @@ GRAPHQL_JWT = {
 GRAPHQL_AUTH = {
     'LOGIN_ALLOWED_FIELDS': ['email'],
     'REGISTER_MUTATION_FIELDS': ['email'],
+    'USER_NODE_EXCLUDE_FIELDS': ['username'],
+    'USER_NODE_FILTER_FIELDS': {
+        'email': ['exact'],
+    }
 }
 
 GRAPHENE = {
