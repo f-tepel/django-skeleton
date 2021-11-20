@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -53,7 +54,7 @@ AUTHENTICATION_BACKENDS = [
 
 GRAPHQL_JWT = {
   'JWT_VERIFY_EXPIRATION': True,
-  'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
+  'JWT_EXPIRATION_DELTA': timedelta(days=365),
   'JWT_ALLOW_ANY_CLASSES': [
     'graphql_auth.mutations.Register',
     'graphql_auth.mutations.VerifyAccount',
@@ -168,7 +169,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_URL = '/api/staticfiles/'
+STATIC_URL = '/api/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
