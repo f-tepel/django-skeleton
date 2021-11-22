@@ -106,7 +106,7 @@
 
   <!-- start preheader -->
   <div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-    Ändern Sie ihre E-mail in zwei Schritten.
+    Bitte verifizieren Sie ihre E-Mail Adresse.
   </div>
   <!-- end preheader -->
 
@@ -150,7 +150,7 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;">
-              <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">E-Mail ändern</h1>
+              <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">E-Mail verifizieren</h1>
             </td>
           </tr>
         </table>
@@ -176,7 +176,7 @@
           <!-- start copy -->
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">Klicken Sie auf den Button um Ihre E-Mail Adresse zu ändern. Wenn Sie keine Änderung ihrer E-Mail Adresse angefordert haben, können Sie diese E-Mail getrost löschen.</p>
+              <p style="margin: 0;">Klicken Sie auf den Button um Ihre E-Mail Adresse zu verifizieren.</p>
             </td>
           </tr>
           <!-- end copy -->
@@ -190,7 +190,7 @@
                     <table border="0" cellpadding="0" cellspacing="0">
                       <tr>
                         <td align="center" bgcolor="#1a82e2" style="border-radius: 6px;">
-                          <a href="{{ token }}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Account aktivieren</a>
+                          <a href="{{ protocol }}://{{ domain }}/{{ path }}/{{ token }}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">E-Mail verifizieren</a>
                         </td>
                       </tr>
                     </table>
@@ -205,7 +205,7 @@
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
               <small style="margin: 0;">Wenn das nicht funktioniert, kopieren Sie den folgenden Link und fügen ihn in Ihren Browser ein:</small>
-              <small style="margin: 0;"><a href="{{ token }}" target="_blank">{{ token }}</a></small>
+              <small style="margin: 0;"><a href="{{ protocol }}://{{ domain }}/{{ path }}/{{ token }}" target="_blank">{{ token }}</a></small>
             </td>
           </tr>
           <!-- end copy -->

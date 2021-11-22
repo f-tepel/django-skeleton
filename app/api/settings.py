@@ -3,22 +3,25 @@ import sys
 from pathlib import Path
 import dj_database_url
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', default='8JtSQz8eVdRmLW&P6dVN')
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
+DOMAIN = os.getenv('DOMAIN')
 DEBUG = os.getenv("DEBUG", "False") == "True"
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost,10.0.2.2").split(",")
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', default=587))
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', f'contact@{DOMAIN}')
+# ACTIVATION_PATH_ON_EMAIL = 'verify_email'
+# PASSWORD_RESET_PATH_ON_EMAIL = 'reset_password'
+# PASSWORD_SET_PATH_ON_EMAIL = 'set_password'
+# EMAIL_SUBJECT_ACTIVATION = 'E-Mail verifizieren'
+
+print('default from')
+print(DEFAULT_FROM_EMAIL)
 
 # Application definition
 
@@ -84,7 +87,7 @@ GRAPHENE = {
     ],
 }
 
-if DEBUG == 1:
+if DEBUG == 'True':
   ALLOWED_HOSTS += ['*', 'localhost', '127.0.0.1']
   # MIDDLEWARE.append('corsheaders.middleware.CorsMiddleware')
   # INSTALLED_APPS.append('corsheaders')
@@ -163,39 +166,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATIC_URL = '/api/staticfiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-
-# Email Verification
-def verified_callback(user):
-    user.is_active = True
-
-
-EMAIL_VERIFIED_CALLBACK = verified_callback
-EMAIL_FROM_ADDRESS = 'noreply@test.com'
-EMAIL_MAIL_SUBJECT = 'Confirm your email'
-EMAIL_MAIL_HTML = 'mail_body.html'
-EMAIL_MAIL_PLAIN = 'mail_body.txt'
-EMAIL_TOKEN_LIFE = 60 * 60
-EMAIL_PAGE_TEMPLATE = 'confirm_template.html'
-EMAIL_PAGE_DOMAIN = 'localhost:8000'
-
-# For Django Email Backend
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = True
